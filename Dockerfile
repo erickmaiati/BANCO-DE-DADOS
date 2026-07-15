@@ -1,6 +1,6 @@
 # Multi-stage Dockerfile for the erp-system backend
 # Build stage
-FROM maven:3.9.6-eclipse-temurin-25 as build
+FROM maven:3.9.9-eclipse-temurin-21 AS build
 WORKDIR /workspace
 COPY pom.xml mvnw mvnw.cmd .mvn/ ./
 COPY src ./src
@@ -8,7 +8,7 @@ COPY src ./src
 RUN mvn -B -DskipTests package
 
 # Runtime stage
-FROM eclipse-temurin:25-jre
+FROM eclipse-temurin:21-jre
 WORKDIR /app
 ARG JAR_PATH=target/*.jar
 COPY --from=build /workspace/target/*.jar /app/app.jar
